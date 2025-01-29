@@ -59,7 +59,9 @@
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                 Edit
                                             </button>
-                                            <button onclick="return kategoriDelete('{{$k->id}}','{{$k->name}}')" class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
+                                            <button
+                                                onclick="return kategoriDelete('{{ $k->id }}','{{ $k->name }}')"
+                                                class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -96,9 +98,8 @@
                         <div class="mb-5">
                             <label for="description"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                <input type="text" id="description" name="description"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                />
+                            <input type="text" id="description" name="description"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -126,6 +127,7 @@
                 </div>
                 <form method="POST" id="formSourceModalEdit">
                     @csrf
+                    @method('PUT')
                     <div class="flex flex-col p-4 space-y-6">
                         <div class="mb-5">
                             <label for="name_edit"
@@ -137,9 +139,8 @@
                         <div class="mb-5">
                             <label for="description"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                <input type="text" id="description_edit" name="description"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                />
+                            <input type="text" id="description_edit" name="description"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         </div>
                     </div>
                     <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
@@ -182,26 +183,14 @@
             const id = button.dataset.id;
             const name = button.dataset.name;
             const description = button.dataset.description;
-
             let url = "{{ route('kategori.update', ':id') }}".replace(':id', id);
 
-            console.log(url);
-            document.getElementById('title_source').innerText = `Update kategori ${name}`;
+            document.getElementById('formSourceModalEdit').setAttribute('action', url);
 
             document.getElementById('name_edit').value = name;
             document.getElementById('description_edit').value = description;
 
-            formModal.setAttribute('action', url);
-
-            if (!formModal.querySelector('input[name="_token"]')) {
-                let csrfToken = document.createElement('input');
-                csrfToken.setAttribute('type', 'hidden');
-                csrfToken.setAttribute('name', '_token');
-                csrfToken.setAttribute('value', '{{ csrf_token() }}');
-                formModal.appendChild(csrfToken);
-            }
-
-            document.getElementById(modalTarget).classList.remove('hidden');
+            document.getElementById('sourceModalEdit').classList.remove('hidden');
         }
 
         const sourceModalClose = () => {

@@ -23,7 +23,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        
+        //
     }
 
     /**
@@ -77,6 +77,21 @@ class KategoriController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $data = Kategori::findOrFail($id);
+
+            if ($data) {
+                $data->delete();
+            }
+
+            return response()->json([
+                'message_delete' => "Data Deleted!"
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to delete data.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

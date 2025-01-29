@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
+use App\Models\Produk;
 use Illuminate\Http\Request;
 
 class ProdukController extends Controller
@@ -11,7 +13,12 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+        $produk = Produk::paginate(20);
+        $kategori = Kategori::all();
+        return view('page.produk.index')->with([
+            'produk' => $produk,
+            'kategori' => $kategori
+        ]);
     }
 
     /**
