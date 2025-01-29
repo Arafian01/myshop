@@ -11,7 +11,7 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        return view('page.kategori.index');
     }
 
     /**
