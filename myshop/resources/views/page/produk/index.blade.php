@@ -18,8 +18,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         NO
@@ -49,7 +48,10 @@
                                         DESKRIPSI
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-
+                                        IMAGE
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        ACTIONS
                                     </th>
                                 </tr>
                             </thead>
@@ -57,28 +59,47 @@
                                 @php
                                     $no = 1;
                                 @endphp
-                                @foreach ($kategori as $k)
-                                    <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                @foreach ($produk as $k)
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ $no++ }}
                                         </th>
                                         <td class="px-6 py-4">
                                             {{ $k->name }}
                                         </td>
                                         <td class="px-6 py-4">
+                                            {{ $k->kategori->name }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $k->jumlah }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $k->satuan }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $k->harga_beli }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $k->harga_jual }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{ $k->stock }}
+                                        </td>
+                                        <td class="px-6 py-4">
                                             {{ $k->description }}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <img src="{{ $k->image ? asset('storage/produk/' . $k->image) : asset('default.jpg') }}" width="150">
                                         </td>
                                         <td class="px-6 py-4">
                                             <button type="button" data-id="{{ $k->id }}"
                                                 data-modal-target="sourceModalEdit" data-name="{{ $k->name }}"
-                                                data-description="{{ $k->description }}" onclick="editSourceModal(this)"
+                                                data-description="{{ $k->description }}"
+                                                onclick="editSourceModal(this)"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                 Edit
                                             </button>
-                                            <button
-                                                onclick="return kategoriDelete('{{ $k->id }}','{{ $k->name }}')"
+                                            <button onclick="return kategoriDelete('{{ $k->id }}','{{ $k->name }}')"
                                                 class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
                                         </td>
                                     </tr>
@@ -90,53 +111,135 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Modal -->
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModal">
         <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
-                <div class="flex items-start justify-between p-4 border-b rounded-t">
+            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-start justify-between p-4 border-b rounded-t sticky top-0 bg-white z-10">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Tambah Kategori
+                        Add Produk
                     </h3>
                     <button type="button" onclick="sourceModalClose()"
                         class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
-                <form method="POST" id="formSourceModal">
-                    @csrf
-                    <div class="flex flex-col p-4 space-y-6">
-                        <div class="mb-5">
-                            <label for="name"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
-                            <input type="text" id="name" name="name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
+                <div class="p-4">
+                    <form method="POST" id="formSourceModal" enctype="multipart/form-data">
+                        @csrf
+                        <div class="flex flex-col space-y-6">
+
+                            <!-- Gambar Produk -->
+                            <div class="mb-5">
+                                <label for="image" class="block mb-2 text-sm font-medium text-gray-900">Gambar Produk</label>
+                                <input type="file" id="image" name="image"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    accept="image/*"
+                                    required />
+                            </div>
+
+                            <!-- Nama Produk -->
+                            <div class="mb-5">
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Produk</label>
+                                <input type="text" id="name" name="name"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Kategori -->
+                            <div class="mb-5">
+                                <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900">Kategori</label>
+                                <select id="category_id" name="category_id"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required>
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach ($kategori as $k)
+                                        <option value="{{ $k->id }}">{{ $k->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Jumlah -->
+                            <div class="mb-5">
+                                <label for="jumlah" class="block mb-2 text-sm font-medium text-gray-900">Jumlah</label>
+                                <input type="text" id="jumlah" name="jumlah"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Kategori -->
+                            <div class="mb-5">
+                                <label for="satuan" class="block mb-2 text-sm font-medium text-gray-900">Satuan</label>
+                                <select id="satuan" name="satuan"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required>
+                                    <option value="">Pilih Satuan</option>
+                                        <option value="Pcs">Pcs</option>
+                                        <option value="Pack">Pack</option>
+                                        <option value="Dus">Dus</option>
+                                        <option value="Botol">Botol</option>
+                                        <option value="Cup">Cup</option>
+                                </select>
+                            </div>
+
+                            <!-- Harga Beli -->
+                            <div class="mb-5">
+                                <label for="harga_beli" class="block mb-2 text-sm font-medium text-gray-900">Harga Beli</label>
+                                <input type="number" id="harga_beli" name="harga_beli"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Harga Jual -->
+                            <div class="mb-5">
+                                <label for="harga_jual" class="block mb-2 text-sm font-medium text-gray-900">Harga Jual</label>
+                                <input type="number" id="harga_jual" name="harga_jual"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+    
+                            <!-- Stok -->
+                            <div class="mb-5">
+                                <label for="stock" class="block mb-2 text-sm font-medium text-gray-900">stock</label>
+                                <input type="number" id="stock" name="stock"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Deskripsi -->
+                            <div class="mb-5">
+                                <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
+                                <textarea id="description" name="description"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required></textarea>
+                            </div>
+    
                         </div>
-                        <div class="mb-5">
-                            <label for="description"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <input type="text" id="description" name="description"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+    
+                        <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b sticky bottom-0 bg-white z-10">
+                            <button type="submit" id="formSourceButton"
+                                class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                            <button type="button" onclick="sourceModalClose()"
+                                class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                         </div>
-                    </div>
-                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
-                        <button type="submit" id="formSourceButton"
-                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                        <button type="button" onclick="sourceModalClose()"
-                            class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+    
+    
+
+    <!-- Edit Modal -->
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModalEdit">
         <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
         <div class="fixed inset-0 flex items-center justify-center">
             <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
                 <div class="flex items-start justify-between p-4 border-b rounded-t">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
-                        Update Kategori
+                        Update Produk
                     </h3>
                     <button type="button" onclick="sourceModalClose()"
                         class="text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
@@ -177,8 +280,8 @@
             const modal = document.getElementById('sourceModal');
 
             // Set form action URL
-            let url = "{{ route('kategori.store') }}";
-            document.getElementById('title_source').innerText = "Add Jurusan";
+            let url = "{{ route('produk.store') }}";
+            document.getElementById('title_source').innerText = "Add Produk";
             formModal.setAttribute('action', url);
 
             // Display the modal

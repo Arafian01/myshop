@@ -21,4 +21,8 @@ class Produk extends Model
     ];
 
     protected $table = 'produk';
+
+    public function kategori(){
+        return $this->belongsTo(Kategori::class, 'category_id', 'id');
+    }
 }

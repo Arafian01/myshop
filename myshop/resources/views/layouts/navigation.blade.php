@@ -42,7 +42,7 @@
                                         {{ __('Kategori') }}
                                     </x-dropdown-link>
 
-                                    <x-dropdown-link :href="route('dashboard')" :class="request()->routeIs('dashboard') ? 'text-red-500 font-bold' : ''">
+                                    <x-dropdown-link :href="route('produk.index')" :class="request()->routeIs('produk.index') ? 'text-red-500 font-bold' : ''">
                                         {{ __('Produk') }}
                                     </x-dropdown-link>
                                 </x-slot>

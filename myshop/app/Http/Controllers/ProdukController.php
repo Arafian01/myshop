@@ -15,9 +15,8 @@ class ProdukController extends Controller
     {
         $produk = Produk::paginate(20);
         $kategori = Kategori::all();
-        return view('page.produk.index')->with([
-            'produk' => $produk,
-            'kategori' => $kategori
+        return view('page.produk.index', compact('produk'))->with([
+            'kategori'=> $kategori
         ]);
     }
 
@@ -34,7 +33,26 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $imageName = null;
+        if ($request->hasFile('image')) {
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->storeAs('public/produk', $imageName);
+        }
+    
+        Produk::create([
+            'name' => $request->name,
+            'category_id' => $request->category_id,
+            'jumlah' => $request->jumlah,
+            'satuan' => $request->satuan,
+            'harga_beli' => $request->harga_beli,
+            'harga_jual' => $request->harga_jual,
+            'stock' => $request->stock,
+            'description' => $request->description,
+            'image' => $imageName,
+        ]);
+        
+        return back()->with('message_delete', 'Data Konsumen Sudah dihapus');
+        
     }
 
     /**
