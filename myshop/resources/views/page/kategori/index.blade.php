@@ -87,9 +87,9 @@
                     @csrf
                     <div class="flex flex-col p-4 space-y-6">
                         <div class="mb-5">
-                            <label for="kategori"
+                            <label for="name"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
-                            <input type="text" id="kategori" name="kategori"
+                            <input type="text" id="name" name="name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
                         </div>
@@ -128,16 +128,16 @@
                     @csrf
                     <div class="flex flex-col p-4 space-y-6">
                         <div class="mb-5">
-                            <label for="kategori"
+                            <label for="name_edit"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
-                            <input type="text" id="kategori" name="kategori"
+                            <input type="text" id="name_edit" name="name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required />
                         </div>
                         <div class="mb-5">
                             <label for="description"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                <input type="text" id="description" name="description"
+                                <input type="text" id="description_edit" name="description"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 />
                         </div>
@@ -186,13 +186,10 @@
             let url = "{{ route('kategori.update', ':id') }}".replace(':id', id);
 
             console.log(url);
-            document.getElementById('title_source').innerText = `Update kategori ${kategori}`;
+            document.getElementById('title_source').innerText = `Update kategori ${name}`;
 
-            document.getElementById('kategori_edit').value = kategori;
-            document.getElementById('status_edit').value = statusValue;
-
-            let event = new Event('change');
-            document.getElementById('status_edit').dispatchEvent(event);
+            document.getElementById('name_edit').value = name;
+            document.getElementById('description_edit').value = description;
 
             formModal.setAttribute('action', url);
 
@@ -202,14 +199,6 @@
                 csrfToken.setAttribute('name', '_token');
                 csrfToken.setAttribute('value', '{{ csrf_token() }}');
                 formModal.appendChild(csrfToken);
-            }
-
-            if (!formModal.querySelector('input[name="_method"]')) {
-                let methodInput = document.createElement('input');
-                methodInput.setAttribute('type', 'hidden');
-                methodInput.setAttribute('name', '_method');
-                methodInput.setAttribute('value', 'PATCH');
-                formModal.appendChild(methodInput);
             }
 
             document.getElementById(modalTarget).classList.remove('hidden');

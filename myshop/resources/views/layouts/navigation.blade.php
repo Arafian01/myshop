@@ -38,7 +38,7 @@
                                 </x-slot>
 
                                 <x-slot name="content">
-                                    <x-dropdown-link :href="route('dashboard')" :class="request()->routeIs('dashboard') ? 'text-red-500 font-bold' : ''" >
+                                    <x-dropdown-link :href="route('kategori.index')" :class="request()->routeIs('kategori.index') ? 'text-red-500 font-bold' : ''" >
                                         {{ __('Kategori') }}
                                     </x-dropdown-link>
 

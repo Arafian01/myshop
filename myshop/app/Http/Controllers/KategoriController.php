@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -11,7 +12,10 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        return view('page.kategori.index');
+        $kategori = Kategori::all();
+        return view('page.kategori.index')->with([
+            'kategori' => $kategori
+        ]);
     }
 
     /**
@@ -19,7 +23,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -27,7 +31,14 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = [
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ];
+
+        Kategori::create($data);
+
+        return back()->with('message_delete', 'Data Konsumen Sudah dihapus');
     }
 
     /**
@@ -51,7 +62,14 @@ class KategoriController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = [
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ];
+
+        $datas = Kategori::findOrFail($id);
+        $datas->update($data);
+        return back()->with('message_delete', 'Data Kategori Sudah dihapus');
     }
 
     /**
