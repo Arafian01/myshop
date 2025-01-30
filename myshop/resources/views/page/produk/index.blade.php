@@ -7,10 +7,7 @@
                 </h2>
             </div>
             <div class="col-md-6 text-right">
-                <form method="GET" action="{{ route('produk.index') }}" class="mb-3">
-                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari barang...">
-                    <button type="submit" class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                </form>
+                
             </div>
         </div>
     </x-slot>
@@ -25,7 +22,13 @@
                             class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
                     </div>
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="text-right px-4">
+                    <form method="GET" action="{{ route('produk.index') }}" class="mb-3">
+                        <input type="text" id="search"  name="search" value="{{ request('search') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5" placeholder="Cari barang...">
+                        <button type="submit" id="buttonSearch" class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500" >Cari</button>
+                    </form>
+                </div>
+                <div class="px-6 pb-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                             <thead
@@ -127,9 +130,9 @@
                             </tbody>
                         </table>
                     </div>
-                    {{-- <div class="mt-4">
+                    <div class="mt-4">
                         {{ $produk->links() }}
-                    </div> --}}
+                    </div>
                 </div>
             </div>
         </div>
@@ -261,8 +264,6 @@
         </div>
     </div>
 
-
-
     <!-- Edit Modal -->
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModalEdit">
         <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
@@ -389,6 +390,8 @@
         </div>
     </div>
     <script>
+         
+
         const functionAdd = () => {
             const formModal = document.getElementById('formSourceModal');
             const modal = document.getElementById('sourceModal');

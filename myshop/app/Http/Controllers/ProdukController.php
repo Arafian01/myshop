@@ -16,9 +16,15 @@ class ProdukController extends Controller
     {
         $search = $request->input('search');
         $kategori = Kategori::all();
-        $produk = Produk::when($search, function ($query, $search) {
-        return $query->where('name', 'like', "%{$search}%");
-        })->get();
+        if ($search) {
+            $produk = Produk::where('name', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
+        } else {
+            $produk = Produk::orderBy('created_at', 'desc')->paginate(20);
+        }
+        
 
         return view('page.produk.index', compact('produk', 'search', 'kategori'));
     }
