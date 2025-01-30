@@ -44,7 +44,6 @@ class ProdukController extends Controller
             'harga_jual' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         // Initialize the finalname variable to handle both cases (image provided or not)
@@ -58,18 +57,19 @@ class ProdukController extends Controller
             }
         } 
 
-        Produk::create([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'jumlah' => $request->jumlah,
-            'satuan' => $request->satuan,
-            'harga_beli' => $request->harga_beli,
-            'harga_jual' => $request->harga_jual,
-            'stock' => $request->stock,
-            'description' => $request->description,
-            'image' => $finalname,
-        ]);
+        $data = [
+            'name' => $request->input('name'),
+            'category_id' => $request->input('category_id'),
+            'jumlah' => $request->input('jumlah'),
+            'satuan' => $request->input('satuan'),
+            'harga_beli' => $request->input('harga_beli'),
+            'harga_jual' => $request->input('harga_jual'),
+            'stock' => $request->input('stock'),
+            'description' => $request->input('description'),
+            'image' => $finalname
+        ];
 
+        Produk::create($data);
         return back()->with('message_success', 'Produk berhasil ditambahkan!');
     }
 
