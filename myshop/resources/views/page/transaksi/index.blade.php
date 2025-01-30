@@ -1,134 +1,39 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="row">
-            <div class="col-md-6">
-                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 ">
-                    {{ __('PRODUK   ') }}
-                </h2>
-            </div>
-            <div class="col-md-6 text-right">
-                
-            </div>
-        </div>
-    </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-4 flex items-center justify-between">
-                    <div>DATA PRODUK</div>
-                    <div>
-                        <a href="#" onclick="return functionAdd()"
-                            class="bg-sky-600 p-2 hover:bg-sky-400 text-white rounded-xl">Add</a>
-                    </div>
-                </div>
-                <div class="text-right px-4">
-                    <form method="GET" action="{{ route('produk.index') }}" class="mb-3">
-                        <input type="text" id="search"  name="search" value="{{ request('search') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" placeholder="Cari barang...">
-                        <button type="submit" id="buttonSearch" class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500" >Cari</button>
+                <div class="text-right p-4">
+                    <form method="GET" action="{{ route('produk.index') }}" class="mb-3 flex items-center gap-2">
+                        <input type="text" id="search" name="search" value="{{ request('search') }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 w-full max-w-xs"
+                            placeholder="Cari barang...">
+                        <button type="submit" id="buttonSearch"
+                            class="bg-green-400 px-4 py-2 rounded-xl hover:bg-green-500">Cari</button>
                     </form>
                 </div>
-                <div class="px-6 pb-6 text-gray-900 dark:text-gray-100">
+                <div class="px-4 pb-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead
-                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        NO
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        IMAGE
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        NAMA
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        KATEGORI
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        JUMLAH
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        SATUAN
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        HARGA BELI
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        HARGA JUAL
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        STOK
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        DESKRIPSI
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        ACTIONS
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $no = 1;
-                                @endphp
-                                @foreach ($produk as $k)
-                                    <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $no++ }}
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            <img src="{{ $k->image ? asset('storage/' . $k->image) : asset('default.jpg') }}"
-                                                width="150">
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->name }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->kategori->name }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->jumlah }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->satuan }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->harga_beli }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->harga_jual }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->stock }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $k->description }}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <button type="button" data-id="{{ $k->id }}"
-                                                data-modal-target="sourceModalEdit" data-name="{{ $k->name }}"
-                                                data-kategori="{{ $k->category_id }}"
-                                                data-jumlah="{{ $k->jumlah }}" data-satuan="{{ $k->satuan }}"
-                                                data-harga_beli="{{ $k->harga_beli }}"
-                                                data-harga_jual="{{ $k->harga_jual }}"
-                                                data-stock="{{ $k->stock }}"
-                                                data-description="{{ $k->description }}"
-                                                onclick="editSourceModal(this)"
-                                                class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
-                                                Edit
-                                            </button>
-                                            <button
-                                                onclick="return kategoriDelete('{{ $k->id }}','{{ $k->name }}')"
-                                                class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        @foreach ($produk as $p)
+                            <div class="p-4 bg-white shadow-md rounded-lg w-full mt-4">
+                                <div class="flex flex-col sm:flex-row items-center gap-4 px -4">
+                                    <!-- Gambar di atas pada HP, kiri pada layar besar -->
+                                    <img src="{{ $p->image ? asset('storage/' . $p->image) : asset('default.jpg') }}" alt="Gambar"
+                                        class="w-40 h-40 rounded-lg object-cover">
+                                    
+                                    <!-- Teks di bawah gambar pada HP, di samping pada layar besar -->
+                                    <div class="flex-1 text-center sm:text-left">
+                                        <h2 class="text-xl font-bold">{{ $p->name }}</h2>
+                                        <p class="text-lg font-semibold text-yellow-600">Rp. {{ number_format($p->harga_jual) }}</p>
+                                        <p class="text-sm text-gray-500">Kategori : {{ $p->kategori->name }}</p>
+                                        <p class="text-sm text-gray-500">Jumlah : {{ $p->jumlah }} {{ $p->satuan }}</p>
+                                    </div>
+                                </div>
+                                <!-- Tombol di bawah pada HP, kanan pada layar besar -->
+                                <div class="flex justify-center sm:justify-end p-4">
+                                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full sm:w-auto">Aksi</button>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <div class="mt-4">
                         {{ $produk->links() }}
@@ -217,8 +122,8 @@
 
                             <!-- Harga Beli -->
                             <div class="mb-5">
-                                <label for="harga_beli_edit"
-                                    class="block mb-2 text-sm font-medium text-gray-900">Harga Beli</label>
+                                <label for="harga_beli_edit" class="block mb-2 text-sm font-medium text-gray-900">Harga
+                                    Beli</label>
                                 <input type="number" id="harga_beli_edit" name="harga_beli_edit"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required />
@@ -264,8 +169,6 @@
         </div>
     </div>
     <script>
-         
-
         const functionAdd = () => {
             const formModal = document.getElementById('formSourceModal');
             const modal = document.getElementById('sourceModal');
