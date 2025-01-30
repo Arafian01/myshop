@@ -70,7 +70,7 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('dashboard')" :class="request()->routeIs('dashboard') ? 'text-red-500 font-bold' : ''">
+                                <x-dropdown-link :href="route('transaksi.index')" :class="request()->routeIs('transaksi.index') ? 'text-red-500 font-bold' : ''">
                                     {{ __('Penjualan') }}
                                 </x-dropdown-link>
                             </x-slot>

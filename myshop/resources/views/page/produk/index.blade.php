@@ -1,8 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('PRODUK') }}
-        </h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 ">
+                    {{ __('PRODUK   ') }}
+                </h2>
+            </div>
+            <div class="col-md-6 text-right">
+                <form method="GET" action="{{ route('produk.index') }}" class="mb-3">
+                    <input type="text" name="search" value="{{ request('search') }}" class="form-control" placeholder="Cari barang...">
+                    <button type="submit" class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                </form>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -98,9 +108,11 @@
                                         <td class="px-6 py-4">
                                             <button type="button" data-id="{{ $k->id }}"
                                                 data-modal-target="sourceModalEdit" data-name="{{ $k->name }}"
-                                                data-kategori="{{ $k->category_id }}" data-jumlah="{{ $k->jumlah }}"
-                                                data-satuan="{{ $k->satuan }}" data-harga_beli="{{ $k->harga_beli }}"
-                                                data-harga_jual="{{ $k->harga_jual }}" data-stock="{{ $k->stock }}"
+                                                data-kategori="{{ $k->category_id }}"
+                                                data-jumlah="{{ $k->jumlah }}" data-satuan="{{ $k->satuan }}"
+                                                data-harga_beli="{{ $k->harga_beli }}"
+                                                data-harga_jual="{{ $k->harga_jual }}"
+                                                data-stock="{{ $k->stock }}"
                                                 data-description="{{ $k->description }}"
                                                 onclick="editSourceModal(this)"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
@@ -115,6 +127,9 @@
                             </tbody>
                         </table>
                     </div>
+                    {{-- <div class="mt-4">
+                        {{ $produk->links() }}
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -228,8 +243,7 @@
                                 <label for="description"
                                     class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
                                 <textarea id="description" name="description"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    ></textarea>
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
                             </div>
 
                         </div>
@@ -358,8 +372,7 @@
                                 <label for="description_edit"
                                     class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
                                 <textarea id="description_edit" name="description_edit"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    ></textarea>
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"></textarea>
                             </div>
 
                         </div>
@@ -371,7 +384,7 @@
                                 class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                         </div>
                     </form>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
