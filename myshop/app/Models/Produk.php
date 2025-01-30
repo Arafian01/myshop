@@ -17,7 +17,8 @@ class Produk extends Model
         'harga_beli',
         'harga_jual',
         'stock',
-        'description'
+        'description',
+        'image'
     ];
 
     protected $table = 'produk';
