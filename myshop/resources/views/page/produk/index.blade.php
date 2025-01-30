@@ -18,10 +18,14 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <thead
+                                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="px-6 py-3">
                                         NO
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        IMAGE
                                     </th>
                                     <th scope="col" class="px-6 py-3">
                                         NAMA
@@ -48,9 +52,6 @@
                                         DESKRIPSI
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        IMAGE
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
                                         ACTIONS
                                     </th>
                                 </tr>
@@ -60,10 +61,16 @@
                                     $no = 1;
                                 @endphp
                                 @foreach ($produk as $k)
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <th scope="row"
+                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             {{ $no++ }}
                                         </th>
+                                        <td class="px-6 py-4">
+                                            <img src="{{ $k->image ? asset('storage/' . $k->image) : asset('default.jpg') }}"
+                                                width="150">
+                                        </td>
                                         <td class="px-6 py-4">
                                             {{ $k->name }}
                                         </td>
@@ -89,17 +96,18 @@
                                             {{ $k->description }}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <img src="{{ $k->image ? asset('storage/produk/' . $k->image) : asset('default.jpg') }}" width="150">
-                                        </td>
-                                        <td class="px-6 py-4">
                                             <button type="button" data-id="{{ $k->id }}"
                                                 data-modal-target="sourceModalEdit" data-name="{{ $k->name }}"
+                                                data-kategori="{{ $k->category_id }}" data-jumlah="{{ $k->jumlah }}"
+                                                data-satuan="{{ $k->satuan }}" data-harga_beli="{{ $k->harga_beli }}"
+                                                data-harga_jual="{{ $k->harga_jual }}" data-stock="{{ $k->stock }}"
                                                 data-description="{{ $k->description }}"
                                                 onclick="editSourceModal(this)"
                                                 class="bg-amber-500 hover:bg-amber-600 px-3 py-1 rounded-md text-xs text-white">
                                                 Edit
                                             </button>
-                                            <button onclick="return kategoriDelete('{{ $k->id }}','{{ $k->name }}')"
+                                            <button
+                                                onclick="return kategoriDelete('{{ $k->id }}','{{ $k->name }}')"
                                                 class="bg-red-500 hover:bg-bg-red-300 px-3 py-1 rounded-md text-xs text-white">Delete</button>
                                         </td>
                                     </tr>
@@ -133,16 +141,17 @@
 
                             <!-- Gambar Produk -->
                             <div class="mb-5">
-                                <label for="image" class="block mb-2 text-sm font-medium text-gray-900">Gambar Produk</label>
+                                <label for="image" class="block mb-2 text-sm font-medium text-gray-900">Gambar
+                                    Produk</label>
                                 <input type="file" id="image" name="image"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                    accept="image/*"
-                                    required />
+                                    accept="image/*" required />
                             </div>
 
                             <!-- Nama Produk -->
                             <div class="mb-5">
-                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama Produk</label>
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nama
+                                    Produk</label>
                                 <input type="text" id="name" name="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required />
@@ -150,7 +159,8 @@
 
                             <!-- Kategori -->
                             <div class="mb-5">
-                                <label for="category_id" class="block mb-2 text-sm font-medium text-gray-900">Kategori</label>
+                                <label for="category_id"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Kategori</label>
                                 <select id="category_id" name="category_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required>
@@ -163,30 +173,33 @@
 
                             <!-- Jumlah -->
                             <div class="mb-5">
-                                <label for="jumlah" class="block mb-2 text-sm font-medium text-gray-900">Jumlah</label>
-                                <input type="text" id="jumlah" name="jumlah"
+                                <label for="jumlah"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Jumlah</label>
+                                <input type="number" id="jumlah" name="jumlah"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required />
                             </div>
 
                             <!-- Kategori -->
                             <div class="mb-5">
-                                <label for="satuan" class="block mb-2 text-sm font-medium text-gray-900">Satuan</label>
+                                <label for="satuan"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Satuan</label>
                                 <select id="satuan" name="satuan"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required>
                                     <option value="">Pilih Satuan</option>
-                                        <option value="Pcs">Pcs</option>
-                                        <option value="Pack">Pack</option>
-                                        <option value="Dus">Dus</option>
-                                        <option value="Botol">Botol</option>
-                                        <option value="Cup">Cup</option>
+                                    <option value="Pcs">Pcs</option>
+                                    <option value="Pack">Pack</option>
+                                    <option value="Dus">Dus</option>
+                                    <option value="Botol">Botol</option>
+                                    <option value="Cup">Cup</option>
                                 </select>
                             </div>
 
                             <!-- Harga Beli -->
                             <div class="mb-5">
-                                <label for="harga_beli" class="block mb-2 text-sm font-medium text-gray-900">Harga Beli</label>
+                                <label for="harga_beli" class="block mb-2 text-sm font-medium text-gray-900">Harga
+                                    Beli</label>
                                 <input type="number" id="harga_beli" name="harga_beli"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required />
@@ -194,15 +207,17 @@
 
                             <!-- Harga Jual -->
                             <div class="mb-5">
-                                <label for="harga_jual" class="block mb-2 text-sm font-medium text-gray-900">Harga Jual</label>
+                                <label for="harga_jual" class="block mb-2 text-sm font-medium text-gray-900">Harga
+                                    Jual</label>
                                 <input type="number" id="harga_jual" name="harga_jual"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required />
                             </div>
-    
+
                             <!-- Stok -->
                             <div class="mb-5">
-                                <label for="stock" class="block mb-2 text-sm font-medium text-gray-900">stock</label>
+                                <label for="stock"
+                                    class="block mb-2 text-sm font-medium text-gray-900">stock</label>
                                 <input type="number" id="stock" name="stock"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required />
@@ -210,15 +225,17 @@
 
                             <!-- Deskripsi -->
                             <div class="mb-5">
-                                <label for="description" class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
+                                <label for="description"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
                                 <textarea id="description" name="description"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required></textarea>
                             </div>
-    
+
                         </div>
-    
-                        <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b sticky bottom-0 bg-white z-10">
+
+                        <div
+                            class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b sticky bottom-0 bg-white z-10">
                             <button type="submit" id="formSourceButton"
                                 class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
                             <button type="button" onclick="sourceModalClose()"
@@ -229,15 +246,15 @@
             </div>
         </div>
     </div>
-    
-    
+
+
 
     <!-- Edit Modal -->
     <div class="fixed inset-0 flex items-center justify-center z-50 hidden" id="sourceModalEdit">
         <div class="fixed inset-0 bg-black opacity-50" onclick="sourceModalClose()"></div>
         <div class="fixed inset-0 flex items-center justify-center">
-            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5">
-                <div class="flex items-start justify-between p-4 border-b rounded-t">
+            <div class="w-full md:w-1/2 relative bg-white rounded-lg shadow mx-5 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-start justify-between p-4 border-b rounded-t sticky top-0 bg-white z-10">
                     <h3 class="text-xl font-semibold text-gray-900" id="title_source">
                         Update Produk
                     </h3>
@@ -246,31 +263,115 @@
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
-                <form method="POST" id="formSourceModalEdit">
-                    @csrf
-                    @method('PUT')
-                    <div class="flex flex-col p-4 space-y-6">
-                        <div class="mb-5">
-                            <label for="name_edit"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori</label>
-                            <input type="text" id="name_edit" name="name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                required />
+                <div class="p-4">
+                    <form method="POST" id="formSourceModalEdit" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="flex flex-col space-y-6">
+
+                            <!-- Gambar Produk -->
+                            <div class="mb-5">
+                                <label for="image_edit" class="block mb-2 text-sm font-medium text-gray-900">Gambar
+                                    Produk</label>
+                                <input type="file" id="image_edit" name="image_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    accept="image/*" />
+                            </div>
+
+                            <!-- Nama Produk -->
+                            <div class="mb-5">
+                                <label for="name_edit" class="block mb-2 text-sm font-medium text-gray-900">Nama
+                                    Produk</label>
+                                <input type="text" id="name_edit" name="name_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Kategori -->
+                            <div class="mb-5">
+                                <label for="category_id_edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Kategori</label>
+                                <select id="category_id_edit" name="category_id_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required>
+                                    <option value="">Pilih Kategori</option>
+                                    @foreach ($kategori as $k)
+                                        <option value="{{ $k->id }}">{{ $k->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <!-- Jumlah -->
+                            <div class="mb-5">
+                                <label for="jumlah_edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Jumlah</label>
+                                <input type="number" id="jumlah_edit" name="jumlah_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Kategori -->
+                            <div class="mb-5">
+                                <label for="satuan_edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Satuan</label>
+                                <select id="satuan_edit" name="satuan_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required>
+                                    <option value="">Pilih Satuan</option>
+                                    <option value="Pcs">Pcs</option>
+                                    <option value="Pack">Pack</option>
+                                    <option value="Dus">Dus</option>
+                                    <option value="Botol">Botol</option>
+                                    <option value="Cup">Cup</option>
+                                </select>
+                            </div>
+
+                            <!-- Harga Beli -->
+                            <div class="mb-5">
+                                <label for="harga_beli_edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Harga Beli</label>
+                                <input type="number" id="harga_beli_edit" name="harga_beli_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Harga Jual -->
+                            <div class="mb-5">
+                                <label for="harga_jual_edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Harga Jual</label>
+                                <input type="number" id="harga_jual_edit" name="harga_jual_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Stok -->
+                            <div class="mb-5">
+                                <label for="stock_edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Stock</label>
+                                <input type="number" id="stock_edit" name="stock_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required />
+                            </div>
+
+                            <!-- Deskripsi -->
+                            <div class="mb-5">
+                                <label for="description_edit"
+                                    class="block mb-2 text-sm font-medium text-gray-900">Deskripsi</label>
+                                <textarea id="description_edit" name="description_edit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    required></textarea>
+                            </div>
+
                         </div>
-                        <div class="mb-5">
-                            <label for="description"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                            <input type="text" id="description_edit" name="description"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        <div
+                            class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b sticky bottom-0 bg-white z-10">
+                            <button type="submit" id="formSourceButtonEdit"
+                                class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
+                            <button type="button" onclick="sourceModalClose()"
+                                class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
                         </div>
-                    </div>
-                    <div class="flex items-center p-4 space-x-2 border-t border-gray-200 rounded-b">
-                        <button type="submit" id="formSourceButtonEdit"
-                            class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500">Simpan</button>
-                        <button type="button" onclick="sourceModalClose()"
-                            class="bg-red-500 m-2 w-40 h-10 rounded-xl text-white hover:shadow-lg hover:bg-red-600">Batal</button>
-                    </div>
-                </form>
+                    </form>
+                </div> 
             </div>
         </div>
     </div>
@@ -303,12 +404,26 @@
             const modalTarget = button.dataset.modalTarget;
             const id = button.dataset.id;
             const name = button.dataset.name;
+            const kategori = button.dataset.kategori;
+            const jumlah = button.dataset.jumlah;
+            const satuan = button.dataset.satuan;
+            const harga_beli = button.dataset.harga_beli;
+            const harga_jual = button.dataset.harga_jual;
+            const stock = button.dataset.stock;
             const description = button.dataset.description;
-            let url = "{{ route('kategori.update', ':id') }}".replace(':id', id);
+            let url = "{{ route('produk.update', ':id') }}".replace(':id', id);
 
             document.getElementById('formSourceModalEdit').setAttribute('action', url);
 
+            //create for jumlah, satuan, harga_beli, harga_jual, stock
+
             document.getElementById('name_edit').value = name;
+            document.getElementById('category_id_edit').value = kategori;
+            document.getElementById('jumlah_edit').value = jumlah;
+            document.getElementById('satuan_edit').value = satuan;
+            document.getElementById('harga_beli_edit').value = harga_beli;
+            document.getElementById('harga_jual_edit').value = harga_jual;
+            document.getElementById('stock_edit').value = stock;
             document.getElementById('description_edit').value = description;
 
             document.getElementById('sourceModalEdit').classList.remove('hidden');
@@ -320,9 +435,9 @@
         }
 
         const kategoriDelete = async (id, name) => {
-            let tanya = confirm(`Apakah anda yakin untuk menghapus Kategori ${name} ?`);
+            let tanya = confirm(`Apakah anda yakin untuk menghapus produk ${name} ?`);
             if (tanya) {
-                await axios.post(`/kategori/${id}`, {
+                await axios.post(`/produk/${id}`, {
                         '_method': 'DELETE',
                         '_token': $('meta[name="csrf-token"]').attr('content')
                     })
