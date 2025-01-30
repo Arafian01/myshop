@@ -24,7 +24,7 @@
                 </div>
                 <div class="text-right px-4">
                     <form method="GET" action="{{ route('produk.index') }}" class="mb-3">
-                        <input type="text" id="search"  name="search" value="{{ request('search') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  p-2.5" placeholder="Cari barang...">
+                        <input type="text" id="search"  name="search" value="{{ request('search') }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" placeholder="Cari barang...">
                         <button type="submit" id="buttonSearch" class="bg-green-400 m-2 w-40 h-10 rounded-xl hover:bg-green-500" >Cari</button>
                     </form>
                 </div>

@@ -16,13 +16,15 @@ class TransaksiController extends Controller
 
         $search = $request->input('search');
         $kategori = Kategori::all();
-
-        // Filter produk berdasarkan pencarian jika ada input search
         if ($search) {
-            $produk = Produk::where('name', 'like', "%$search%")->paginate(20);
+            $produk = Produk::where('name', 'like', "%$search%")
+                ->orWhere('description', 'like', "%$search%")
+                ->orderBy('created_at', 'desc')
+                ->paginate(5);
         } else {
-            $produk = Produk::paginate(20);
+            $produk = Produk::orderBy('created_at', 'desc')->paginate(20);
         }
+        
 
         return view('page.transaksi.index', compact('produk', 'search', 'kategori'));
     }

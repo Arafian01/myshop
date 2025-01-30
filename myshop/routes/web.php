@@ -23,8 +23,9 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::resource('kategori', KategoriController::class)->middleware('auth');
     Route::resource('produk', ProdukController::class)->middleware('auth');
-    Route::resource('transaksi', TransaksiController::class)->middleware('auth');
     Route::get('/produk', [ProdukController::class, 'index'])->name('produk.index');
+    Route::resource('transaksi', TransaksiController::class)->middleware('auth');
+    Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
 });
 
 require __DIR__.'/auth.php';
